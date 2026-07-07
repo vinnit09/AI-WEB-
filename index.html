@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level Up! - Epic Birthday Quest</title>
+  <meta name="description" content="Welcome to the Level Up! Retro 8-Bit Arcade birthday party celebration and quest guide. Choose your fighter, explore the quest log, and beat the high score!">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Retro Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="crt-enabled">
+  <!-- Scanline CRT overlays -->
+  <div class="crt-overlay"></div>
+  <div class="scanlines"></div>
+
+  <!-- Global Sound Control and Settings -->
+  <div class="global-controls">
+    <button id="sound-toggle" class="retro-btn sound-off" title="Toggle Sound">
+      <span class="icon">🔇</span> <span class="label">MUTED</span>
+    </button>
+    <button id="crt-toggle" class="retro-btn scanline-on" title="Toggle CRT Scanlines">
+      <span class="icon">📺</span> <span class="label">CRT: ON</span>
+    </button>
+  </div>
+
+  <!-- Splash Screen / Hero Section -->
+  <header class="splash-screen" id="home">
+    <div class="arcade-cabinet-border">
+      <div class="marquee">
+        <h1 class="glitch-text" data-text="LEVEL UP!">LEVEL UP!</h1>
+        <p class="subtitle">THE ULTIMATE BIRTHDAY QUEST</p>
+      </div>
+
+      <div class="splash-content">
+        <div class="insert-coin-container">
+          <span class="insert-coin flashing">★ INSERT COIN ★</span>
+        </div>
+        <div class="press-start-container">
+          <button id="press-start-btn" class="press-start-btn">PRESS START</button>
+        </div>
+      </div>
+
+      <div class="arcade-cabinet-controls">
+        <div class="joystick-left">
+          <div class="stick"></div>
+          <div class="base"></div>
+        </div>
+        <div class="arcade-buttons">
+          <span class="btn-cap yellow-btn"></span>
+          <span class="btn-cap pink-btn"></span>
+          <span class="btn-cap purple-btn"></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Arcade Dashboard Container -->
+  <main class="main-dashboard hidden" id="dashboard">
+    <nav class="dashboard-nav">
+      <a href="#fighter-select" class="nav-link active" data-target="fighter-select">CHARACTER SELECT</a>
+      <a href="#quest-log" class="nav-link" data-target="quest-log">QUEST LOG</a>
+      <a href="#play-zone" class="nav-link" data-target="play-zone">PLAYABLE CABINET</a>
+      <a href="#leaderboard" class="nav-link" data-target="leaderboard">LEADERBOARD</a>
+    </nav>
+
+    <!-- SECTION 1: Character Select -->
+    <section id="fighter-select" class="dashboard-section active">
+      <h2 class="section-title text-yellow">CHOOSE YOUR FIGHTER</h2>
+      
+      <div class="fighter-layout">
+        <!-- Fighter Select Grid -->
+        <div class="fighter-grid">
+          <div class="fighter-card active" data-fighter="newbie">
+            <div class="avatar-frame border-pink">
+              <img src="assets/level_1_newbie.png" alt="Level 1: The Newbie" class="pixel-avatar">
+            </div>
+            <div class="fighter-summary">
+              <span class="level-tag">LVL 1</span>
+              <h3 class="fighter-name">THE NEWBIE</h3>
+            </div>
+          </div>
+
+          <div class="fighter-card" data-fighter="sidekick">
+            <div class="avatar-frame border-yellow">
+              <img src="assets/level_10_sidekick.png" alt="Level 10: The Sidekick" class="pixel-avatar">
+            </div>
+            <div class="fighter-summary">
+              <span class="level-tag">LVL 10</span>
+              <h3 class="fighter-name">THE SIDEKICK</h3>
+            </div>
+          </div>
+
+          <div class="fighter-card" data-fighter="beta-tester">
+            <div class="avatar-frame border-purple">
+              <img src="assets/level_18_beta_tester.png" alt="Level 18: The Beta Tester" class="pixel-avatar">
+            </div>
+            <div class="fighter-summary">
+              <span class="level-tag">LVL 18</span>
+              <h3 class="fighter-name">BETA TESTER</h3>
+            </div>
+          </div>
+
+          <div class="fighter-card" data-fighter="guild-master">
+            <div class="avatar-frame border-pink">
+              <img src="assets/level_25_guild_master.png" alt="Level 25: The Guild Master" class="pixel-avatar">
+            </div>
+            <div class="fighter-summary">
+              <span class="level-tag">LVL 25</span>
+              <h3 class="fighter-name">GUILD MASTER</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fighter Stats panel -->
+        <div class="fighter-stats-panel border-purple">
+          <div class="stats-header border-bottom-purple">
+            <h3 id="stats-fighter-name">THE NEWBIE</h3>
+            <span class="stats-lvl" id="stats-fighter-lvl">LVL 1</span>
+          </div>
+
+          <div class="stats-body">
+            <div class="stats-visual-container">
+              <div class="stats-avatar-large border-yellow">
+                <img id="stats-fighter-image" src="assets/level_1_newbie.png" alt="Fighter Avatar" class="pixel-avatar-large">
+              </div>
+              <div class="bars-container">
+                <div class="bar-row">
+                  <span class="bar-label">HP</span>
+                  <div class="progress-bar border-pink">
+                    <div id="stats-hp-fill" class="progress-fill fill-pink" style="width: 100%;"></div>
+                  </div>
+                  <span class="bar-value" id="stats-hp-text">10/10</span>
+                </div>
+                <div class="bar-row">
+                  <span class="bar-label">MP</span>
+                  <div class="progress-bar border-purple">
+                    <div id="stats-mp-fill" class="progress-fill fill-purple" style="width: 100%;"></div>
+                  </div>
+                  <span class="bar-value" id="stats-mp-text">5/5</span>
+                </div>
+                <div class="bar-row">
+                  <span class="bar-label">XP</span>
+                  <div class="progress-bar border-yellow">
+                    <div id="stats-xp-fill" class="progress-fill fill-yellow" style="width: 10%;"></div>
+                  </div>
+                  <span class="bar-value" id="stats-xp-text">10/100</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="stats-details">
+              <div class="stat-spec">
+                <strong>CLASS:</strong> <span id="stats-class" class="text-pink">Gamer Spawn</span>
+              </div>
+              <div class="stat-spec">
+                <strong>SPECIAL MOVE:</strong> <span id="stats-special" class="text-yellow">Ultrasonic Screech</span>
+              </div>
+              <div class="stat-spec">
+                <strong>ATTRIBUTES:</strong>
+                <ul id="stats-attributes" class="attributes-list">
+                  <li>Cuteness: 99</li>
+                  <li>Diaper Armor: +5</li>
+                  <li>Sleeplessness: 100%</li>
+                </ul>
+              </div>
+              <div class="stat-spec">
+                <strong>INVENTORY:</strong>
+                <div id="stats-inventory" class="inventory-grid">
+                  <div class="inv-slot" title="Baby Bottle: Restores 50% MP"><span class="inv-icon">🍼</span></div>
+                  <div class="inv-slot" title="Baby Rattler: Distracts enemies"><span class="inv-icon">🪘</span></div>
+                  <div class="inv-slot empty"></div>
+                  <div class="inv-slot empty"></div>
+                </div>
+              </div>
+              <div class="stat-description">
+                <p id="stats-description">Freshly spawned into the server of life. Equipped with diapers and a sleeping schedule that confuses all players. High potential, currently zero skills.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Quest Log (Itinerary) -->
+    <section id="quest-log" class="dashboard-section">
+      <h2 class="section-title text-pink">QUEST LOG: PARTY SCHEDULE</h2>
+      <p class="section-subtitle">Complete these quests to unlock the ultimate birthday loot!</p>
+
+      <div class="quest-list">
+        <!-- Quest 1 -->
+        <div class="quest-item border-pink active-quest" data-quest="1">
+          <div class="quest-header">
+            <span class="quest-status text-yellow">▶ ACTIVE</span>
+            <span class="quest-time text-purple">18:00 (6:00 PM)</span>
+            <h3 class="quest-title">QUEST 1: ARRIVAL AT THE TAVERN</h3>
+            <span class="quest-toggle">▼</span>
+          </div>
+          <div class="quest-content">
+            <p class="quest-desc">Spawn at the party headquarters. Gather party members, equip birthday gear, and stock up on initial beverage potions at the lobby bar.</p>
+            <div class="quest-objectives">
+              <strong>OBJECTIVES:</strong>
+              <ul>
+                <li>✔ Check-in at the registration desk</li>
+                <li>✔ Equip custom retro birthday badges/glow sticks</li>
+                <li>✔ Say "Happy Level Up!" to the Guild Master</li>
+              </ul>
+            </div>
+            <div class="quest-rewards">
+              <strong>REWARDS:</strong>
+              <div class="reward-badges">
+                <span class="badge border-yellow"><span class="text-yellow">🏆</span> +50 XP</span>
+                <span class="badge border-purple"><span class="text-purple">🍹</span> Potion of Socializing</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quest 2 -->
+        <div class="quest-item border-yellow" data-quest="2">
+          <div class="quest-header">
+            <span class="quest-status text-purple">🔒 LOCKED</span>
+            <span class="quest-time text-purple">19:30 (7:30 PM)</span>
+            <h3 class="quest-title">QUEST 2: THE FEAST & ENERGY POTIONS</h3>
+            <span class="quest-toggle">▼</span>
+          </div>
+          <div class="quest-content">
+            <p class="quest-desc">Recharge HP and MP. A grand buffet feast is laid out in the banquet hall. Indulge in wood-fired pizza sliders, mini arcade burgers, and neon mocktails/potions.</p>
+            <div class="quest-objectives">
+              <strong>OBJECTIVES:</strong>
+              <ul>
+                <li>☐ Consume at least 2 slices of Pizza Sliders</li>
+                <li>☐ Sip the glowing "Purple Mana" elixir</li>
+                <li>☐ Engage in banter and trivia with the party alliance</li>
+              </ul>
+            </div>
+            <div class="quest-rewards">
+              <strong>REWARDS:</strong>
+              <div class="reward-badges">
+                <span class="badge border-yellow"><span class="text-yellow">🏆</span> +150 XP</span>
+                <span class="badge border-pink"><span class="text-pink">🍖</span> HP Restored to Max</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quest 3 -->
+        <div class="quest-item border-purple" data-quest="3">
+          <div class="quest-header">
+            <span class="quest-status text-purple">🔒 LOCKED</span>
+            <span class="quest-time text-purple">21:00 (9:00 PM)</span>
+            <h3 class="quest-title">QUEST 3: THE CAKE BOSS FIGHT</h3>
+            <span class="quest-toggle">▼</span>
+          </div>
+          <div class="quest-content">
+            <p class="quest-desc">The ultimate encounter. Defeat the Candle Dragon and cut the pixelated birthday cake. Sing the level-up song to grant the Guild Master their new status.</p>
+            <div class="quest-objectives">
+              <strong>OBJECTIVES:</strong>
+              <ul>
+                <li>☐ Gather around the altar of sweets</li>
+                <li>☐ Unleash "Loud Sing" special ability</li>
+                <li>☐ Extinguish the candle flames of fire damage</li>
+              </ul>
+            </div>
+            <div class="quest-rewards">
+              <strong>REWARDS:</strong>
+              <div class="reward-badges">
+                <span class="badge border-yellow"><span class="text-yellow">🏆</span> +500 XP</span>
+                <span class="badge border-purple"><span class="text-purple">🍰</span> Slice of Mythic Cake (+50 Speed)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quest 4 -->
+        <div class="quest-item border-pink" data-quest="4">
+          <div class="quest-header">
+            <span class="quest-status text-purple">🔒 LOCKED</span>
+            <span class="quest-time text-purple">22:00 (10:00 PM)</span>
+            <h3 class="quest-title">QUEST 4: THE MULTIPLAYER ARENA</h3>
+            <span class="quest-toggle">▼</span>
+          </div>
+          <div class="quest-content">
+            <p class="quest-desc">Enter the arcade play zone. Compete in multiplayer Mario Kart, Dance Dance Revolution, retro board games, and karaoke showdowns.</p>
+            <div class="quest-objectives">
+              <strong>OBJECTIVES:</strong>
+              <ul>
+                <li>☐ Beat the high score on the arcade cabinet</li>
+                <li>☐ Complete a dance track on Hard mode</li>
+                <li>☐ Survive until midnight without running out of stamina</li>
+              </ul>
+            </div>
+            <div class="quest-rewards">
+              <strong>REWARDS:</strong>
+              <div class="reward-badges">
+                <span class="badge border-yellow"><span class="text-yellow">🏆</span> +1000 XP</span>
+                <span class="badge border-pink"><span class="text-pink">👑</span> Legendary Party Animal Badge</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Playable Cabinet (Mini-Game) -->
+    <section id="play-zone" class="dashboard-section">
+      <h2 class="section-title text-yellow">PLAYABLE CABINET: CANDLE DEFENDER</h2>
+      <p class="section-subtitle">Destroy falling birthday candles to protect the giant cake! Save the cake, win achievements!</p>
+
+      <div class="cabinet-container border-yellow">
+        <!-- Arcade Screen Area -->
+        <div class="cabinet-screen">
+          <div id="game-start-overlay" class="game-overlay">
+            <div class="overlay-inner">
+              <h3 class="game-title text-pink">CANDLE DEFENDER</h3>
+              <p class="game-instructions">Move with <span class="key-cap">◀</span> and <span class="key-cap">▶</span> keys (or Swipe / Tap)<br>Press <span class="key-cap">SPACEBAR</span> (or Tap Button) to Shoot lasers!</p>
+              <button id="start-game-btn" class="retro-btn border-yellow text-yellow">PLAY GAME</button>
+            </div>
+          </div>
+
+          <div id="game-over-overlay" class="game-overlay hidden">
+            <div class="overlay-inner">
+              <h3 class="game-over-title text-pink">GAME OVER</h3>
+              <p class="game-score-report">Your Score: <span id="game-final-score" class="text-yellow">0</span></p>
+              <div id="achievement-unlocked" class="achievement-card border-purple hidden">
+                <span class="achievement-star">★</span>
+                <div>
+                  <div class="ach-title">ACHIEVEMENT UNLOCKED!</div>
+                  <div class="ach-desc">Cake Protector: Scored 100+ points!</div>
+                </div>
+              </div>
+              <button id="restart-game-btn" class="retro-btn border-pink text-pink">TRY AGAIN</button>
+            </div>
+          </div>
+
+          <div class="game-hud">
+            <div class="hud-item">SCORE: <span id="hud-score" class="text-yellow">0</span></div>
+            <div class="hud-item">LIVES: <span id="hud-lives" class="text-pink">❤❤❤</span></div>
+          </div>
+
+          <canvas id="gameCanvas" width="600" height="400"></canvas>
+        </div>
+
+        <!-- Arcade Physical Controls representation for visual design/touch inputs -->
+        <div class="cabinet-bottom-controls border-top-yellow">
+          <div class="mobile-dpad">
+            <button id="dpad-left" class="dpad-btn">◀</button>
+            <button id="dpad-right" class="dpad-btn">▶</button>
+          </div>
+          <div class="mobile-action">
+            <button id="action-shoot" class="arcade-action-btn">FIRE</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Leaderboard & Messages (RSVP) -->
+    <section id="leaderboard" class="dashboard-section">
+      <h2 class="section-title text-purple">HIGH SCORE LEADERBOARD</h2>
+      <p class="section-subtitle">Submit your birthday wishes to log your name on the server high-score list!</p>
+
+      <div class="leaderboard-layout">
+        <!-- RSVP Message Form -->
+        <div class="guestbook-form-panel border-pink">
+          <h3 class="panel-header border-bottom-pink text-pink">SUBMIT HIGH SCORE</h3>
+          
+          <form id="rsvp-form">
+            <div class="form-group">
+              <label for="guest-name" class="form-label text-yellow">PLAYER INITIALS / NAME:</label>
+              <input type="text" id="guest-name" class="retro-input" placeholder="e.g., JON or MARIO" maxlength="15" required>
+            </div>
+
+            <div class="form-group">
+              <label for="guest-class" class="form-label text-yellow">CHOOSE CHARACTER CLASS:</label>
+              <select id="guest-class" class="retro-select">
+                <option value="Warrior">⚔️ WARRIOR</option>
+                <option value="Mage">🔮 MAGE</option>
+                <option value="Rogue">🗡️ ROGUE</option>
+                <option value="Bard">🎵 BARD</option>
+                <option value="Paladin">🛡️ PALADIN</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="guest-message" class="form-label text-yellow">BIRTHDAY WISH / MESSAGE:</label>
+              <textarea id="guest-message" class="retro-textarea" placeholder="Write your epic birthday spell here..." maxlength="140" required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn border-yellow text-yellow">SUBMIT SCORE</button>
+          </form>
+        </div>
+
+        <!-- Leaderboard Table -->
+        <div class="leaderboard-table-panel border-yellow">
+          <h3 class="panel-header border-bottom-yellow text-yellow">TOP BIRTHDAY WISHES</h3>
+          
+          <div class="leaderboard-table-container">
+            <table class="leaderboard-table">
+              <thead>
+                <tr>
+                  <th class="col-rank text-purple">RANK</th>
+                  <th class="col-name text-purple">PLAYER</th>
+                  <th class="col-class text-purple">CLASS</th>
+                  <th class="col-msg text-purple">BIRTHDAY WISHLOG</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboard-body">
+                <!-- Dynamically populated or default rows -->
+                <tr class="top-row">
+                  <td>01</td>
+                  <td>MARIO</td>
+                  <td>🎵 BARD</td>
+                  <td>It's-a your birthday! Level Up, my friend! Let's eat some mushroom cake! 🍄</td>
+                </tr>
+                <tr class="top-row">
+                  <td>02</td>
+                  <td>OBI-WAN</td>
+                  <td>⚔️ WARRIOR</td>
+                  <td>May the force (and cake) be with you on your 25th rotation! ⚔️</td>
+                </tr>
+                <tr>
+                  <td>03</td>
+                  <td>ZELDA</td>
+                  <td>🔮 MAGE</td>
+                  <td>It's dangerous to go alone on this birthday quest. Take this piece of cake! 🍰</td>
+                </tr>
+                <tr>
+                  <td>04</td>
+                  <td>CHIEF</td>
+                  <td>🛡️ PALADIN</td>
+                  <td>Master Chief, mind telling me what you're doing at that party? Sir, finishing this buffet. 🍔</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Achievement Toast Notification -->
+    <div id="toast-notification" class="achievement-toast border-pink hidden">
+      <span class="toast-star">★</span>
+      <div class="toast-content">
+        <div class="toast-title text-pink">LEVEL UP!</div>
+        <div class="toast-desc" id="toast-text">Achievement Unlocked!</div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="arcade-footer">
+    <p>© 2026 - LEVEL UP! INC. ALL RIGHTS RESERVED. PLAYED BY YOU.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
